@@ -7,14 +7,9 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
-
-// FIXED BUG: Added curly braces for the named export
 import { connectDB } from "./config/db.js";
 
-// Load environment variables first
 dotenv.config();
-
-// Connect to MongoDB
 connectDB();
 
 const app = express();
@@ -23,8 +18,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: '*', // Must match your React Vite port
-    credentials: true // Crucial for our HTTP-only cookies to work across ports
+    origin: true, // FIXED: '*' crashes when credentials is true. 'true' safely allows your Vercel app!
+    credentials: true 
 }));
 
 // API Routes
